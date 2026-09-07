@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  decrementQuantity,
-  incrementQuantity,
   removeItem,
   selectCartItems,
   selectCartTotalAmount,
   selectCartTotalQuantity,
+  updateQuantity,
 } from './CartSlice.jsx';
 
 function CartNavbar({ onNavigate }) {
@@ -89,7 +88,14 @@ function CartItem({ onNavigate }) {
                     <div className="quantity-controls" aria-label={`Quantity of ${plant.name}`}>
                       <button
                         type="button"
-                        onClick={() => dispatch(decrementQuantity(plant.id))}
+                        onClick={() =>
+                          dispatch(
+                            updateQuantity({
+                              id: plant.id,
+                              quantity: plant.quantity - 1,
+                            }),
+                          )
+                        }
                         disabled={plant.quantity === 1}
                         aria-label={`Decrease ${plant.name} quantity`}
                       >
@@ -98,7 +104,14 @@ function CartItem({ onNavigate }) {
                       <span>{plant.quantity}</span>
                       <button
                         type="button"
-                        onClick={() => dispatch(incrementQuantity(plant.id))}
+                        onClick={() =>
+                          dispatch(
+                            updateQuantity({
+                              id: plant.id,
+                              quantity: plant.quantity + 1,
+                            }),
+                          )
+                        }
                         aria-label={`Increase ${plant.name} quantity`}
                       >
                         +
